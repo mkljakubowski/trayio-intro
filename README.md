@@ -1,5 +1,5 @@
 # trayio-intro
 
 SBT project:
-- sbt run - executes instrctions from inut.txt
+- sbt run - executes instructions from input.txt
 - sbt test - executes tests
