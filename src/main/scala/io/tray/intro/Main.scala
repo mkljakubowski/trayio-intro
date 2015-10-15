@@ -7,10 +7,13 @@ import scala.io.Source
 object Main extends App {
   val input = Source.fromFile(new File("input.txt")).mkString
 
-  val room = Room.create(input).get
-  val hoover = Hoover(room)
-  val (position, cleaned) = hoover.hoover()
-
-  println(s"${position.x} ${position.y}")
-  println(cleaned)
+  Room.create(input).flatMap { room =>
+    val hoover = Hoover(room)
+    hoover.hoover().map { case HooverResult(position, cleaned) =>
+      println(s"${position.x} ${position.y}")
+      println(cleaned)
+    }
+  }.getOrElse {
+    println("invalid input")
+  }
 }
