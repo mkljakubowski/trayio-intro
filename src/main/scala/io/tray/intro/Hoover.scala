@@ -4,17 +4,15 @@ case class Hoover(room: Room) {
 
   private def move(position: Position, instruction: Instruction): Position = {
     instruction match {
-      case North => position.copy(x = position.x - 1)
-      case South => position.copy(x = position.x + 1)
-      case West => position.copy(y = position.y - 1)
-      case East => position.copy(y = position.y + 1)
+      case West => position.copy(x = position.x - 1)
+      case East => position.copy(x = position.x + 1)
+      case North => position.copy(y = position.y + 1)
+      case South => position.copy(y = position.y - 1)
     }
   }
 
   def hoover(): (Position, Int) = {
-    val start = Position(0, 0)
-
-    val hooverPositions = room.instructions.foldLeft(Seq(start)){ case (positions, instruction) =>
+    val hooverPositions = room.instructions.foldLeft(Seq(room.startPosition)) { case (positions, instruction) =>
       move(positions.head, instruction) +: positions
     }
 
@@ -23,4 +21,5 @@ case class Hoover(room: Room) {
     val numberOfPatchesCleaned = hooverPositionsSet.intersect(dirtPatchSet).size
     (hooverPositions.head, numberOfPatchesCleaned)
   }
+
 }
